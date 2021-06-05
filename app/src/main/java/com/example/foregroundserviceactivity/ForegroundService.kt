@@ -31,7 +31,9 @@ class ForegroundService : Service() {
         }
 
 
-        val notification = NotificationCompat.Builder(this,id).apply {
+        val notification = NotificationCompat
+            .Builder(this,id)
+            .apply {
             mContentTitle = "通知のタイトル"
             mContentText = "通知の内容"
             setSmallIcon(R.drawable.ic_launcher_background)
