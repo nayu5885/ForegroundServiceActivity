@@ -1,5 +1,6 @@
 package com.example.foregroundserviceactivity
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
@@ -30,14 +31,10 @@ class ForegroundService : Service() {
             manager.createNotificationChannel(mChannel)
         }
 
-
-        val notification = NotificationCompat
-            .Builder(this,id)
-            .apply {
-            mContentTitle = "通知のタイトル"
-            mContentText = "通知の内容"
-            setSmallIcon(R.drawable.ic_launcher_background)
-        }.build()
+        val notification: Notification = Notification.Builder(this, id)
+            .setContentTitle("こんにちは")
+            .setContentText("さようなら")
+            .build()
 
         Thread(
             Runnable {
