@@ -4,10 +4,14 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.app.Service.STOP_FOREGROUND_DETACH
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ServiceCompat.STOP_FOREGROUND_DETACH
 import java.security.Provider
 
 class ForegroundService : Service() {
@@ -18,23 +22,27 @@ class ForegroundService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val name = "通知のタイトル的情報を設定"
         val id = "casareal_foreground"
         val notifyDescription = "この通知の詳細情報を設定します"
 
-        if (manager.getNotificationChannel(id) == null) {
-            val mChannel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH)
-            mChannel.apply {
-                description = notifyDescription
+       if (notificationManager.getNotificationChannel(id) == null) {
+           val mChannel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH)
+           mChannel.apply {
+               description = notifyDescription
             }
-            manager.createNotificationChannel(mChannel)
+              notificationManager.createNotificationChannel(mChannel)
         }
 
-        val notification: Notification = Notification.Builder(this, id)
-            .setContentTitle("こんにちは")
-            .setContentText("さようなら")
-            .build()
+        val notification = Notification.Builder(this, id)
+            .apply {
+                setContentTitle("こんにちは")
+                setContentText("さようなら")
+                setSmallIcon(R.drawable.ic_launcher_background)
+                //.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            }.build()
+     // notificationManager .notify(1, notification)
 
         Thread(
             Runnable {
@@ -43,7 +51,7 @@ class ForegroundService : Service() {
 
                 }
 
-                stopForeground(Service.STOP_FOREGROUND_DETACH)
+                stopForeground(STOP_FOREGROUND_DETACH)
 
             }).start()
 
@@ -52,4 +60,5 @@ class ForegroundService : Service() {
         return START_STICKY
 
     }
+
 }
