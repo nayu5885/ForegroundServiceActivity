@@ -1,18 +1,10 @@
 package com.example.foregroundserviceactivity
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.Service
-import android.app.Service.STOP_FOREGROUND_DETACH
-import android.content.Context
+import android.app.*
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
+import android.widget.Button
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.ServiceCompat.STOP_FOREGROUND_DETACH
-import java.security.Provider
 
 class ForegroundService : Service() {
 
@@ -35,14 +27,20 @@ class ForegroundService : Service() {
               notificationManager.createNotificationChannel(mChannel)
         }
 
-        val notification = Notification.Builder(this, id)
+      //  val pendingIntent: PendingIntent =
+         //   Intent(this, MainActivity::class.java).let { notificationIntent ->
+           //     PendingIntent.getActivity(this, 0, notificationIntent, 0)
+          //  }
+
+
+        val notification = NotificationCompat.Builder(this, id)
             .apply {
                 setContentTitle("こんにちは")
                 setContentText("さようなら")
                 setSmallIcon(R.drawable.ic_launcher_background)
                 //.setPriority(NotificationCompat.PRIORITY_DEFAULT)
             }.build()
-     // notificationManager .notify(1, notification)
+      notificationManager .notify(1, notification)
 
         Thread(
             Runnable {
