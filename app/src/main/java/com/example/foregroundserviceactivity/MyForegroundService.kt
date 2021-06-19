@@ -3,16 +3,19 @@ package com.example.foregroundserviceactivity
 import android.app.*
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import android.widget.Button
 import androidx.core.app.NotificationCompat
 
-class ForegroundService : Service() {
+class MyForegroundService : Service() {
 
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        Log.d("tag","start")
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val name = "通知のタイトル的情報を設定"
@@ -40,7 +43,7 @@ class ForegroundService : Service() {
                 setSmallIcon(R.drawable.ic_launcher_background)
                 //.setPriority(NotificationCompat.PRIORITY_DEFAULT)
             }.build()
-      notificationManager .notify(1, notification)
+      notificationManager.notify(1, notification)
 
         Thread(
             Runnable {

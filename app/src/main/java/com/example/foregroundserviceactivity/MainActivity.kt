@@ -1,7 +1,5 @@
 package com.example.foregroundserviceactivity
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,11 +10,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val serviceIntent = Intent(this, MyForegroundService::class.java)
+        startForegroundService(serviceIntent)
+
         val button: Button =findViewById(R.id.button)
 
         button.setOnClickListener {
-            val serviceIntent = Intent(this, ForegroundService::class.java)
-            startService(serviceIntent)
+
         }
     }
 }
